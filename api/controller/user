@@ -1,5 +1,5 @@
 const pool = require("../database");
-const user = async (req, res) => {
+const Signup = async (req, res) => {
   try {
     // Check if the necessary fields are in the request body
     const { id, name, email, password } = req.body;
@@ -24,4 +24,4 @@ const user = async (req, res) => {
   }
 };
 
-module.exports = { user };
+module.exports = { Signup };

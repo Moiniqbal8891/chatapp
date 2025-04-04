@@ -8,7 +8,6 @@ export const Register = () => {
   const nav = useNavigate();
   const [formData, setFormData] = useState({
     id: "",
-
     name: "",
     email: "",
     password: "",
@@ -21,7 +20,6 @@ export const Register = () => {
       [name]: value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
@@ -37,7 +35,6 @@ export const Register = () => {
       // Handle error (e.g., display an error message)
     }
   };
-
   return (
     <Container maxWidth="xs">
       <Box
@@ -100,7 +97,7 @@ export const Register = () => {
         </Button>
         <Typography sx={{ textAlign: "center" }}>
           Already have an account
-          <Button color="primary" onClick={() => nav("/")}>
+          <Button color="primary" onClick={() => nav("/Login")}>
             Login
           </Button>
         </Typography>
