@@ -3,10 +3,12 @@ import { useState } from "react";
 import axios from "axios";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Password } from "@mui/icons-material";
+
 export const Register = () => {
   const nav = useNavigate();
   const [formData, setFormData] = useState({
+    id: "",
+
     name: "",
     email: "",
     password: "",
@@ -55,11 +57,23 @@ export const Register = () => {
         <Typography variant="h5" align="center">
           Register
         </Typography>
+
+        <TextField
+          label="Id"
+          name="id"
+          type="id"
+          onChange={handleChange}
+          value={formData.id}
+          fullWidth
+          required
+        />
+
         <TextField
           label="Name"
-          name="Name"
+          name="name"
           type="Name"
           onChange={handleChange}
+          value={formData.name}
           fullWidth
           required
         />
@@ -68,11 +82,13 @@ export const Register = () => {
           name="email"
           type="email"
           onChange={handleChange}
+          value={formData.email}
           fullWidth
           required
         />
         <TextField
           onChange={handleChange}
+          value={formData.password}
           label="Password"
           name="password"
           type="password"
