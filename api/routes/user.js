@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-// Import the controller function
-const { Signup } = require("../controller/user");
+// Import the controller functions
+const { Signup, Login } = require("../controller/user");
 
-// Define a GET route
-router.post("/", Signup); // Now accessible at `/api/user/`
+// Routes
+router.post("/register", Signup);
+router.post("/login", Login);
 
 module.exports = router;

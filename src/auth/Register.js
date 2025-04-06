@@ -25,11 +25,15 @@ export const Register = () => {
     console.log("Form Data Submitted:", formData);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/user",
+        "http://localhost:5000/api/user/register",
         formData
       );
       console.log("Server response:", response.data);
       // Handle success (e.g., display a success message or redirect)
+
+      if (response.data.success) {
+        nav("/chat");
+      }
     } catch (error) {
       console.error("Submission error:", error);
       // Handle error (e.g., display an error message)
@@ -97,7 +101,7 @@ export const Register = () => {
         </Button>
         <Typography sx={{ textAlign: "center" }}>
           Already have an account
-          <Button color="primary" onClick={() => nav("/Login")}>
+          <Button color="primary" onClick={() => nav("/")}>
             Login
           </Button>
         </Typography>
