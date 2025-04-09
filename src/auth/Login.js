@@ -4,6 +4,7 @@ import axios from "axios";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export const Login = () => {
   const nav = useNavigate();
@@ -29,12 +30,12 @@ export const Login = () => {
       );
       console.log("Server response:", response.data);
       if (response.data.success) {
-        nav("/chat");
+        localStorage.setItem("token", response.data.token);
+        const user = jwtDecode(response.data.token);
+        nav("/chat", { state: user });
       } else {
-        alert("pls try againg");
+        alert("pls try again");
       }
-
-      // Handle success (e.g., display a success message or redirect)
     } catch (error) {
       console.error("Submission error:", error);
       // Handle error (e.g., display an error message)

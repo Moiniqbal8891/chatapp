@@ -1,30 +1,53 @@
-import { io } from "socket.io-client";
 import { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import ChatBox from "./mainchat";
 import Profile from "./profile";
 import { Paper } from "@mui/material";
-// const socket = io("http://localhost:5000"); // Ensure URL matches your backend
-import socket from "./socket";
+import { useLocation, useNavigate } from "react-router-dom";
+import io from "socket.io-client";
+const PATH = "http://localhost:5000";
+
+// import socket from "./socket"; this work was for connection in starting i did
 const Chat = () => {
+  const nav = useNavigate;
+  const { state } = useLocation();
+
   useEffect(() => {
-    console.log("🔄 Trying to connect...");
+    if (!state) {
+      nav("/");
+      return;
+    }
+  });
+  useEffect(() => {
+    const socket = io(PATH); // Connect to the server
+
     socket.on("connect", () => {
-      console.log(`🔗 Connected to Socket: ${socket.id}`);
+      console.log("Connected to server with socket ID:", socket.id); // Log socket ID
     });
-    socket.on("disconnect", () => {
-      console.log("❌ Disconnected from Server");
-    });
+
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
+      socket.disconnect(); // Clean up the socket connection on unmount
     };
   }, []);
+
+  // useEffect(() => {
+  //   console.log("🔄 Trying to connect...");
+  //   socket.on("connect", () => {
+  //     console.log(`🔗 Connected to Socket: ${socket.id}`);
+  //   });
+  //   socket.on("disconnect", () => {
+  //     console.log("❌ Disconnected from Server");
+  //   });
+  //   return () => {
+  //     socket.off("connect");
+  //     socket.off("disconnect");
+  //   };
+  // }, []);
   return (
     <Paper square elevation={0} sx={{ height: "auto", display: "flex" }}>
-      <Sidebar />
+      <Sidebar user={state} />
       <ChatBox />
-      <Profile />
+      <Profile user={state} />
     </Paper>
   );
 };

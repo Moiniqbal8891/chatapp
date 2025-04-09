@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const Header = () => {
+const Header = ({ user }) => {
   return (
     <Card sx={{ bgcolor: "primary.main", color: "white", display: "flex" }}>
       <CardHeader
@@ -20,8 +20,8 @@ const Header = () => {
             </Typography>
           </IconButton>
         }
-        title="hello"
-        subheader={<Typography> subheader</Typography>}
+        title={user.name}
+        subheader={<Typography> {user.email}</Typography>}
       />
     </Card>
   );

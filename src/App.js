@@ -1,8 +1,16 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
 import Chat from "./chat";
+
+const AuthenticatedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to="/" />;
+  }
+  return children;
+};
 
 function App() {
   return (
@@ -10,7 +18,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Chat" element={<Chat />} />
+        <Route
+          path="/Chat"
+          element={
+            <AuthenticatedRoute>
+              <Chat />
+            </AuthenticatedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

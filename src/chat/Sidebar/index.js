@@ -13,14 +13,14 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-export default function Sidebar() {
+export default function Sidebar({ user }) {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   return (
     <Box sx={{ width: "30vw", bgcolor: "background.paper" }}>
-      <Header />
+      <Header user={user} />
       <Tabs
         value={value}
         onChange={handleChange}

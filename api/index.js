@@ -1,17 +1,13 @@
+const http = require("http");
 const express = require("express");
 const cors = require("cors");
-// Initialize express app
 const app = express();
-// Use CORS middleware to allow cross-origin requests
 app.use(cors());
-// Use express.json() middleware for parsing JSON in request body
 app.use(express.json());
 
-// Import the user route
+const socket = require("./socket");
 const userRoute = require("./routes/user"); // Ensure the correct file path
-
-// Set the route prefix
-
+const server = http.createServer(app);
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
@@ -20,6 +16,7 @@ app.use("/api/user", userRoute); // Ensures routes are available under `/api/use
 
 // Start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
+  socket(server);
   console.log(`Server is running on port ${PORT}`);
 });
