@@ -13,7 +13,9 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-export default function Sidebar({ user }) {
+export default function Sidebar({ user, onlineUsers }) {
+  console.log(onlineUsers);
+
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -37,25 +39,28 @@ export default function Sidebar({ user }) {
           <List
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           >
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Moin Iqbal"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      sx={{ color: "text.primary", display: "inline" }}
-                    >
-                      Kreadev
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
+            {onlineUsers.map((user) => (
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={user.name}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{ color: "text.primary", display: "inline" }}
+                      >
+                        {user.email}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            ))}
+
             <Divider variant="inset" component="li" />
           </List>
         </div>
