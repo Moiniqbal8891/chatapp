@@ -13,12 +13,19 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-export default function Sidebar({ user, onlineUsers }) {
+export default function Sidebar({ user, onlineUsers, setroomData, roomData }) {
   console.log(onlineUsers);
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+  const handleChatRoom = (user) => {
+    setroomData({
+      ...roomData,
+      room: "test",
+      reciever: user,
+    });
   };
   return (
     <Box sx={{ width: "30vw", bgcolor: "background.paper" }}>
@@ -40,7 +47,11 @@ export default function Sidebar({ user, onlineUsers }) {
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           >
             {onlineUsers.map((user) => (
-              <ListItem alignItems="flex-start">
+              <ListItem
+                key={user.id}
+                alignItems="flex-start"
+                onClick={() => handleChatRoom({ user })}
+              >
                 <ListItemAvatar>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>

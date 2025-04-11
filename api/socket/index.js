@@ -22,6 +22,10 @@ const socketInit = (server) => {
       io.emit("User_Added", onlineUsers);
     });
 
+    socket.on("Message", (Message) => {
+      console.log(Message, "Message from socket frontend");
+    });
+
     // addUser(user, socket.id);
     // io.emit("User Added ", onlineUsers);
   });

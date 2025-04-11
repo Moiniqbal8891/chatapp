@@ -3,8 +3,21 @@ import { Box } from "@mui/material";
 // import TextField from "@mui/material";
 import { InsertEmoticon, MoreVert } from "@mui/icons-material";
 // import { InsertEmoticon } from "@mui/icons-material";
+import { useState } from "react";
+// footer message code start
+const Footer = ({ handleMessage }) => {
+  const [Message, setMessage] = useState("");
+  const handleChange = (event) => {
+    setMessage(event.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(Message);
+    handleMessage(Message);
+  };
 
-const Footer = () => {
+  // footer message code end here
+
   return (
     <Box sx={{ P: 1, display: "flex" }}>
       <Button sx={{ minWidth: "auto", mr: 1 }}>
@@ -13,15 +26,25 @@ const Footer = () => {
       <Button sx={{ minWidth: "auto", mr: 1 }}>
         <InsertEmoticon />
       </Button>
-      <Box sx={{ display: "flex", mr: 1 }}>
-        <TextField placeholder="Type your message here" />
-      </Box>
-      <Button
-        variant="outlined"
-        sx={{ display: "flex", mr: 1, height: "auto", mindwidth: "auto" }}
+      <Box
+        sx={{ display: "flex", mr: 1 }}
+        component="form"
+        onSubmit={handleSubmit}
       >
-        Send
-      </Button>
+        <TextField
+          fullWidth
+          placeholder="Type your message..."
+          value={Message}
+          onChange={handleChange}
+        />
+        <Button
+          variant="outlined"
+          sx={{ display: "flex", mr: 1, height: "auto", mindwidth: "auto" }}
+          type="submit"
+        >
+          Send
+        </Button>
+      </Box>
     </Box>
   );
 };

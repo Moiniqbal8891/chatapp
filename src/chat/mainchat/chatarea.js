@@ -93,7 +93,9 @@ const ChatArea = () => {
             >
               <ListItemText
                 primary="Moin Iqbal"
-                secondary={<Typography variant="contain"> Kreadev</Typography>}
+                secondary={
+                  <Typography variant="contain"> Kreadev moin</Typography>
+                }
                 sx={{ m: 0 }}
               />
               <Box
