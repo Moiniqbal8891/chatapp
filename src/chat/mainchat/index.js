@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import ChatHeader from "./chatheader";
 import ChatArea from "./chatarea";
 import Footer from "./footer";
-const ChatBox = ({ roomData, handleMessage }) => {
+const ChatBox = ({ roomData, handleMessage, allMessaages }) => {
   console.log(roomData);
   return (
     <Box
@@ -16,7 +16,7 @@ const ChatBox = ({ roomData, handleMessage }) => {
       {roomData.room ? (
         <>
           <ChatHeader roomData={roomData} />
-          <ChatArea />
+          <ChatArea allMessaages={allMessaages} />
           <Footer handleMessage={handleMessage} />
         </>
       ) : (

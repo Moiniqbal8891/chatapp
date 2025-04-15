@@ -48,7 +48,7 @@ export default function Sidebar({ user, onlineUsers, setroomData, roomData }) {
           >
             {onlineUsers.map((user) => (
               <ListItem
-                key={user.id}
+                // key={user.id}
                 alignItems="flex-start"
                 onClick={() => handleChatRoom({ user })}
               >
@@ -58,7 +58,7 @@ export default function Sidebar({ user, onlineUsers, setroomData, roomData }) {
                 <ListItemText
                   primary={user.name}
                   secondary={
-                    <React.Fragment>
+                    <React.Fragment key={user.id}>
                       <Typography
                         component="span"
                         variant="body2"

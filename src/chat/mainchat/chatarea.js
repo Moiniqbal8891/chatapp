@@ -18,7 +18,8 @@ import {
 import { Directions, Replay } from "@mui/icons-material";
 import zIndex from "@mui/material/styles/zIndex";
 import Avatar from "@mui/material/Avatar";
-const ChatArea = () => {
+const ChatArea = ({ allMessaages }) => {
+  console.log("messages", allMessaages);
   return (
     <>
       <Box
@@ -43,36 +44,42 @@ const ChatArea = () => {
           <Chip label="Today" />
         </Stack>
         <List sx={{ p: 0, overflowY: "auto", flex: "1 0 0" }}>
-          <ListItem alignItems="flex">
-            <ListItemAvatar>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-            </ListItemAvatar>
-            <Paper sx={{ width: "25vw", p: 1.5 }}>
-              <ListItemText
-                primary="Moin Iqbal"
-                secondary={<Typography variant="contain"> Kreadev</Typography>}
-                sx={{ m: 0 }}
-              />
+          {allMessaages.map((item) => (
+            <ListItem alignItems="flex">
+              <ListItemAvatar>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              </ListItemAvatar>
+              <Paper sx={{ width: "25vw", p: 1.5 }}>
+                <ListItemText
+                  primary={item.sender.name}
+                  secondary={
+                    <Typography variant="contain">
+                      {item.receiver.name}
+                    </Typography>
+                  }
+                  sx={{ m: 0 }}
+                />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Typography sx={{ mt: 0.5 }}>12:30</Typography>
-                <Box>
-                  <IconButton sx={{ color: "primary.main" }}>
-                    <ReplyIcon size="small" />
-                  </IconButton>
-                  <IconButton sx={{ color: "error.main" }}>
-                    <DeleteIcon size="small" />
-                  </IconButton>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ mt: 0.5 }}>{item.Message}</Typography>
+                  <Box>
+                    <IconButton sx={{ color: "primary.main" }}>
+                      <ReplyIcon size="small" />
+                    </IconButton>
+                    <IconButton sx={{ color: "error.main" }}>
+                      <DeleteIcon size="small" />
+                    </IconButton>
+                  </Box>
                 </Box>
-              </Box>
-            </Paper>
-          </ListItem>
+              </Paper>
+            </ListItem>
+          ))}
           <ListItem alignItems="flex" sx={{ flexDirection: "row-reverse" }}>
             <ListItemAvatar
               sx={{ display: "flex", flexDirection: "row-reverse" }}
@@ -92,9 +99,11 @@ const ChatArea = () => {
               }}
             >
               <ListItemText
-                primary="Moin Iqbal"
+                primary="Moin Iqbal asdfsdaf"
                 secondary={
-                  <Typography variant="contain"> Kreadev moin</Typography>
+                  <Typography variant="contain">
+                    messagase Kreadev moin
+                  </Typography>
                 }
                 sx={{ m: 0 }}
               />

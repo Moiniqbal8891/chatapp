@@ -12,8 +12,10 @@ const Footer = ({ handleMessage }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(Message);
-    handleMessage(Message);
+    if (Message) {
+      handleMessage(Message);
+    }
+    setMessage("");
   };
 
   // footer message code end here

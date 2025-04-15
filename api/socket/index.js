@@ -1,15 +1,22 @@
 // socketInit.js
 const socket = require("socket.io");
 const onlineUsers = [];
+
 const addUser = (user, socketId) => {
-  // const isExist = onlineUsers.findIndex((item) => item.id === user.id);
-
-  // console.log(isExist);
-  // user.socketId = socketId;
-  onlineUsers.push({ socketId: user.socketId, ...user });
-
-  // onlineUsers.push(user);
+  const isExist = onlineUsers.findIndex((item) => item.id === user.id);
+  if (isExist !== -1) {
+    onlineUsers.splice(isExist, 1);
+  }
+  user.socketId = socketId;
+  onlineUsers.push(user);
 };
+const removeUser = (socketId) => {
+  const isExist = onlineUsers.findIndex((item) => item.socketId === socketId);
+  if (isExist !== -1) {
+    onlineUsers.splice(isExist, 1);
+  }
+};
+
 const socketInit = (server) => {
   const io = socket(server, {
     cors: {
@@ -22,8 +29,16 @@ const socketInit = (server) => {
       io.emit("User_Added", onlineUsers);
     });
 
-    socket.on("Message", (Message) => {
-      console.log(Message, "Message from socket frontend");
+    socket.on("Send_Message", (Message) => {
+      console.log("Message from socket and frontend", Message);
+      // socket.to(Message.reciever.socketId).emit("Recieved_Message", Message);
+      socket.to(Message.receiver.socketId).emit("Received_Message", Message);
+    });
+
+    socket.on("disconnect", (reason) => {
+      console.log(socket.id, "disconnect");
+      removeUser(socket.id);
+      io.emit("User_Removed", onlineUsers);
     });
 
     // addUser(user, socket.id);

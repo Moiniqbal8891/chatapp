@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import io from "socket.io-client";
-import { Message } from "@mui/icons-material";
+import { Message, SendRounded } from "@mui/icons-material";
 const PATH = "http://localhost:5000";
 
 // import socket from "./socket"; this work was for connection in starting i did
@@ -17,11 +17,12 @@ const Chat = () => {
   const nav = useNavigate;
   const [IsConnected, setIsConnected] = useState(false);
   const [onlineUsers, setonlineUsers] = useState([]);
+  const [allMessaages, setallMessaages] = useState([]);
   const [roomData, setroomData] = useState({
     room: null,
+    receiver: null,
   });
   const { state } = useLocation();
-
   useEffect(() => {
     if (!state) {
       nav("/");
@@ -31,7 +32,6 @@ const Chat = () => {
   useEffect(() => {
     const socket = io(PATH); // Connect to the server
     socketRef.current = socket;
-
     socket.on("connect", () => {
       console.log("Connected to server with socket ID:", socket.id); // Log socket ID
       socket.on("connect", () => {
@@ -42,25 +42,34 @@ const Chat = () => {
       });
     });
   }, []);
-
   useEffect(() => {
     if (IsConnected) {
       socketRef.current.emit("ADD_USER", state);
       socketRef.current.on("User_Added", (data) => {
-        console.log(data);
         setonlineUsers(data);
       });
-
-      // socketRef.current.on("USER_ADDED", (data) => {
-      //   console.log(data);
-      // });
+      socketRef.current.on("UsUser_Removed", (data) => {
+        setonlineUsers(data);
+      });
+      socketRef.current.on("Received_Message", (data) => {
+        console.log(data, "data from server");
+        setallMessaages((prevState) => [...prevState, data]);
+      });
     }
   }, [IsConnected]);
   const handleMessage = (Message) => {
-    console.log("Message from chat ", Message);
+    const data = {
+      Message,
+      receiver: roomData.reciever.user,
+      sender: state,
+    };
 
-    socketRef.current.emit("Message", Message);
+    console.log("this is console Message from chat ", allMessaages);
+    socketRef.current.emit("Send_Message", data);
+    setallMessaages((prevState) => [...prevState, data]);
   };
+  console.log(allMessaages);
+
   // useEffect(() => {
   //   console.log("🔄 Trying to connect...");
   //   socket.on("connect", () => {
@@ -83,7 +92,11 @@ const Chat = () => {
         setroomData={setroomData}
         roomData={roomData}
       />
-      <ChatBox roomData={roomData} handleMessage={handleMessage} />
+      <ChatBox
+        roomData={roomData}
+        handleMessage={handleMessage}
+        allMessaages={allMessaages}
+      />
       <Profile user={state} />
     </Paper>
   );
