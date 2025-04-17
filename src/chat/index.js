@@ -20,6 +20,7 @@ const Chat = () => {
       socket.off("disconnect");
     };
   }, []);
+
   return (
     <Paper square elevation={0} sx={{ height: "auto", display: "flex" }}>
       <Sidebar />

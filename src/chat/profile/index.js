@@ -1,9 +1,27 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
-import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Box, Typography, Button } from "@mui/material";
 import ProfHeader from "./profheader";
+import { useState, useEffect } from "react";
 const Profile = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const nav = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+
+    sessionStorage.removeItem("token");
+    // Update the logged-in state
+    nav("/");
+  };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
   return (
     <>
       <Box>
@@ -38,6 +56,9 @@ const Profile = () => {
               Moin Iqbal
             </Typography>
           </Box>
+          <Button variant="contained" color="error" onClick={handleLogout}>
+            Logout
+          </Button>
         </Box>
       </Box>
     </>

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useResolvedPath } from "react-router-dom";
 import { useState } from "react";
 
 export const Login = () => {
@@ -27,11 +27,12 @@ export const Login = () => {
         "http://localhost:5000/api/user/login",
         formData
       );
-      console.log("Server response:", response.data);
-      if (response.data.success) {
+      console.log("response", response);
+      if (response.data.success && response.data.token) {
+        localStorage.setItem("token", response.data.token);
         nav("/chat");
       } else {
-        alert("pls try againg");
+        alert("pls try again");
       }
 
       // Handle success (e.g., display a success message or redirect)
@@ -40,6 +41,14 @@ export const Login = () => {
       // Handle error (e.g., display an error message)
     }
   };
+
+  const token = localStorage.getItem("token");
+  console.log(token);
+  useEffect(() => {
+    if (token) {
+      nav("/chat"); // Redirect if already logged in
+    }
+  }, []);
 
   return (
     <Container maxWidth="xs">

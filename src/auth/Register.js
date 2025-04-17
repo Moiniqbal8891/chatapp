@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Register = () => {
   const nav = useNavigate();
@@ -39,6 +40,14 @@ export const Register = () => {
       // Handle error (e.g., display an error message)
     }
   };
+
+  const token = localStorage.getItem("token");
+  console.log(token);
+  useEffect(() => {
+    if (token) {
+      nav("/chat"); // Redirect if already logged in
+    }
+  }, []);
   return (
     <Container maxWidth="xs">
       <Box
