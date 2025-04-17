@@ -13,14 +13,23 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-export default function Sidebar() {
+export default function Sidebar({ user, onlineUsers, setroomData, roomData }) {
+  console.log(onlineUsers);
+
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const handleChatRoom = (user) => {
+    setroomData({
+      ...roomData,
+      room: "test",
+      reciever: user,
+    });
+  };
   return (
     <Box sx={{ width: "30vw", bgcolor: "background.paper" }}>
-      <Header />
+      <Header user={user} />
       <Tabs
         value={value}
         onChange={handleChange}
@@ -37,25 +46,32 @@ export default function Sidebar() {
           <List
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           >
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Moin Iqbal"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      sx={{ color: "text.primary", display: "inline" }}
-                    >
-                      Kreadev
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
+            {onlineUsers.map((user) => (
+              <ListItem
+                // key={user.id}
+                alignItems="flex-start"
+                onClick={() => handleChatRoom({ user })}
+              >
+                <ListItemAvatar>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={user.name}
+                  secondary={
+                    <React.Fragment key={user.id}>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{ color: "text.primary", display: "inline" }}
+                      >
+                        {user.email}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            ))}
+
             <Divider variant="inset" component="li" />
           </List>
         </div>

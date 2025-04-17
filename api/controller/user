@@ -1,6 +1,11 @@
 const pool = require("../database");
 const bcrypt = require("bcrypt");
+<<<<<<< HEAD
 var jwt = require("jsonwebtoken");
+=======
+const jwt = require("jsonwebtoken");
+
+>>>>>>> 1679cef42252e29e857eb9c8f644b3977e5e37a3
 const Signup = async (req, res) => {
   try {
     // Check if the necessary fields are in the request body
@@ -18,7 +23,6 @@ const Signup = async (req, res) => {
       email,
       hashedPassword,
     ]);
-
     res
       .status(200)
       .json({ success: true, message: "New role Registered successfully" });
@@ -26,14 +30,12 @@ const Signup = async (req, res) => {
     console.error(error);
   }
 };
-
 const Login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const query = "SELECT * FROM users WHERE email = $1";
     const user = await pool.query(query, [email]);
-
     if (user.rowCount === 0) {
       return res.status(200).json({
         success: false,
@@ -41,7 +43,6 @@ const Login = async (req, res) => {
       });
     }
     const validPassword = await bcrypt.compare(password, user.rows[0].password);
-
     if (!validPassword) {
       return res
         .status(401)
@@ -49,6 +50,7 @@ const Login = async (req, res) => {
     }
     const token = jwt.sign(
       {
+<<<<<<< HEAD
         id: user.id,
         name: user.name,
         email: user.email,
@@ -56,6 +58,16 @@ const Login = async (req, res) => {
       "shhhhh",
       { expiresIn: "1h" }
     );
+=======
+        id: user.rows[0].id, // Accessing id from the first row of the result
+        name: user.rows[0].name, // Accessing name from the first row of the result
+        email: user.rows[0].email, // Accessing email from the first row of the result
+      },
+      "shhhhh", // Secret key for signing
+      { expiresIn: "1h" } // Token expiration time
+    );
+
+>>>>>>> 1679cef42252e29e857eb9c8f644b3977e5e37a3
     return res.status(200).json({
       success: true,
       message: "Login Successfully, Redirecting",
@@ -70,29 +82,6 @@ const Login = async (req, res) => {
       error: error.message, // you can remove this in production
     });
   }
-
-  //   if (user.rows?.length === 0) {
-  //     return res
-  //       .status(404)
-  //       .json({ success: false, message: "Account not found" });
-  //   }
-
-  //   const validPassword = await bcrypt.compare(password, user.rows[0].password);
-
-  // //   if (!validPassword) {
-  // //     return res
-  // //       .status(401)
-  // //       .json({ success: false, message: "Invalid password" });
-  // //   }
-
-  // res.status(200).json({
-  //   success: true,
-  //   message: "Login successful, Redirecting",
-  // });
-  // // } catch (error) {
-  // //   console.error(error);
-  // //   res.status(500).json({ success: false, message: "Internal Server Error" });
-  // // }
 };
 
 module.exports = { Signup, Login };

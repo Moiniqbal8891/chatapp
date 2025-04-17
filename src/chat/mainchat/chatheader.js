@@ -8,7 +8,8 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const ChatHeader = () => {
+const ChatHeader = ({ roomData }) => {
+  console.log(roomData);
   return (
     <Card sx={{ display: "flex" }}>
       <CardHeader
@@ -20,8 +21,8 @@ const ChatHeader = () => {
             </Typography>
           </IconButton>
         }
-        title="Moin Iqbal"
-        subheader={<Typography> Kreadev</Typography>}
+        title={roomData.reciever.user.name}
+        subheader={<Typography> {roomData.reciever.user.email} </Typography>}
       />
     </Card>
   );

@@ -4,6 +4,7 @@ import axios from "axios";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
 import { useNavigate, useResolvedPath } from "react-router-dom";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export const Login = () => {
   const nav = useNavigate();
@@ -18,6 +19,7 @@ export const Login = () => {
       [name]: value,
     }));
   };
+  //is exist
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitted:", formData);
@@ -27,15 +29,21 @@ export const Login = () => {
         "http://localhost:5000/api/user/login",
         formData
       );
+<<<<<<< HEAD
       console.log("response", response);
       if (response.data.success && response.data.token) {
         localStorage.setItem("token", response.data.token);
         nav("/chat");
+=======
+      console.log("Server response:", response.data);
+      if (response.data.success) {
+        localStorage.setItem("token", response.data.token);
+        const user = jwtDecode(response.data.token);
+        nav("/chat", { state: user });
+>>>>>>> 1679cef42252e29e857eb9c8f644b3977e5e37a3
       } else {
         alert("pls try again");
       }
-
-      // Handle success (e.g., display a success message or redirect)
     } catch (error) {
       console.error("Submission error:", error);
       // Handle error (e.g., display an error message)

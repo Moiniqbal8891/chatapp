@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const ProfHeader = () => {
+const ProfHeader = (user) => {
   return (
     <Card sx={{ display: "flex" }}>
       <CardHeader
