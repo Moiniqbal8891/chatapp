@@ -42,8 +42,6 @@ const Chat = () => {
       });
     });
   }, []);
-<<<<<<< HEAD
-=======
   useEffect(() => {
     if (IsConnected) {
       socketRef.current.emit("ADD_USER", state);
@@ -85,8 +83,6 @@ const Chat = () => {
   //     socket.off("disconnect");
   //   };
   // }, []);
->>>>>>> 1679cef42252e29e857eb9c8f644b3977e5e37a3
-
   return (
     <Paper square elevation={0} sx={{ height: "auto", display: "flex" }}>
       <Sidebar
