@@ -12,7 +12,7 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-const removeUser = (scokcetId) => {
+const removeUser = (socketId) => {
   const isExist = onlinUsers.findIndex((item) => item.id == user.id);
 };
 app.use("/api/user", userRoute); // Ensures routes are available under `/api/user`

@@ -45,5 +45,4 @@ const socketInit = (server) => {
     // io.emit("User Added ", onlineUsers);
   });
 };
-
 module.exports = socketInit;

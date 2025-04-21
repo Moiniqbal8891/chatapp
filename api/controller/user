@@ -1,11 +1,7 @@
 const pool = require("../database");
 const bcrypt = require("bcrypt");
-<<<<<<< HEAD
-var jwt = require("jsonwebtoken");
-=======
 const jwt = require("jsonwebtoken");
 
->>>>>>> 1679cef42252e29e857eb9c8f644b3977e5e37a3
 const Signup = async (req, res) => {
   try {
     // Check if the necessary fields are in the request body
@@ -50,15 +46,6 @@ const Login = async (req, res) => {
     }
     const token = jwt.sign(
       {
-<<<<<<< HEAD
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
-      "shhhhh",
-      { expiresIn: "1h" }
-    );
-=======
         id: user.rows[0].id, // Accessing id from the first row of the result
         name: user.rows[0].name, // Accessing name from the first row of the result
         email: user.rows[0].email, // Accessing email from the first row of the result
@@ -67,7 +54,6 @@ const Login = async (req, res) => {
       { expiresIn: "1h" } // Token expiration time
     );
 
->>>>>>> 1679cef42252e29e857eb9c8f644b3977e5e37a3
     return res.status(200).json({
       success: true,
       message: "Login Successfully, Redirecting",

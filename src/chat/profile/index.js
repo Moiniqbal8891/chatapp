@@ -1,29 +1,5 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-import { Box, Typography, Button } from "@mui/material";
-import ProfHeader from "./profheader";
-import { useState, useEffect } from "react";
-const Profile = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const nav = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-
-    sessionStorage.removeItem("token");
-    // Update the logged-in state
-    nav("/");
-  };
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
-=======
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom"; // For navigation to other routes
 import ProfHeader from "./profheader";
@@ -35,7 +11,6 @@ const Profile = ({ user }) => {
     navigate("/");
   };
 
->>>>>>> 1679cef42252e29e857eb9c8f644b3977e5e37a3
   return (
     <>
       <Box>
