@@ -29,18 +29,18 @@ export const Login = () => {
         "http://localhost:5000/api/user/login",
         formData
       );
-<<<<<<< HEAD
+
       console.log("response", response);
       if (response.data.success && response.data.token) {
         localStorage.setItem("token", response.data.token);
         nav("/chat");
-=======
+
       console.log("Server response:", response.data);
       if (response.data.success) {
         localStorage.setItem("token", response.data.token);
         const user = jwtDecode(response.data.token);
         nav("/chat", { state: user });
->>>>>>> 1679cef42252e29e857eb9c8f644b3977e5e37a3
+
       } else {
         alert("pls try again");
       }
