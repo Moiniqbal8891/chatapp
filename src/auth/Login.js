@@ -102,8 +102,7 @@ export const Login = () => {
         <Button color="error">Forgot Password</Button>
 
         <Typography>
-          {" "}
-          Don't have an account
+               Don't have an account
           <Button color="success" onClick={() => nav("/Register")}>
             Create an account
           </Button>
